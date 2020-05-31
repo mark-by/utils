@@ -1,12 +1,19 @@
 #!/bin/bash
 
 err() {
-    echo "Usage: --db <db_name> --user <username>" 
-    echo "* Cоздать c новым юзером:     --new <password>"
-    echo "* Cоздать по sql dump'у:      --dump <dump_file>"
-    echo "* Удалить указанную базу"
-    echo "      и создать заново:       --recreate" 
-    echo "* Только удалить базу:        --drop"
+    echo "Usage: --db <db_name>" 
+    echo "--user <username>     Имя пользователя бд. Если указать этот тэг, то будет создаваться/пересоздаваться бд"
+    echo ""
+    echo "--new <password>      Создать нового пользователя с указанным паролем"
+    echo ""
+    echo "--dump <dump_file>    При создании, бд будет конструироватья по указанному dump файлу."
+    echo "                      В ином случае [без опции --user] будет создаваться dump в указанном файле"
+    echo ""
+    echo "----- Указывать последними"
+    echo ""
+    echo "--recreate            Пересоздать [drop и create]" 
+    echo ""
+    echo "--drop                Только удалить базу"
 }
 
 if [ "$1" = "" ]; then
@@ -82,8 +89,12 @@ fi
 
 
 if [ "$db_username" = "" ]; then
-    err
-    exit 1
+    if [ "$dump_file" = "" ]; then
+        err
+        exit 1
+    fi
+    sudo -u postgres pg_dump > $dump_file
+    exit 0
 fi
 
 if [ ! "$recreate" = "" ]; then
