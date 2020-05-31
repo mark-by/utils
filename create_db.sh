@@ -17,6 +17,10 @@ password() {
     pass=$1
 }
 
+err() {
+    echo "Usage: --db <db_name> --user <username> [[if new user] --new <password>]" >&2
+}
+
 optspec=":-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
@@ -33,13 +37,13 @@ while getopts "$optspec" optchar; do
                 *)
                     if [ "$OPTERR" = 1 ] && [ "${optspec:0:1}" != ":" ]; then
                         echo "Unknown option --${OPTARG}" >&2
-                        echo "Usage: --db <db_name> --user <username> [[if new user] --new <password>]" >&2
+                        err
                     fi
                     ;;
             esac;;
         *)
             if [ "$OPTERR" != 1 ] || [ "${optspec:0:1}" = ":" ]; then
-                echo "Usage: --db <db_name> --user <username> [[if new user] --new <password>]" >&2
+                err
             fi
             ;;
     esac
