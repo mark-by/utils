@@ -93,7 +93,7 @@ if [ "$db_username" = "" ]; then
         err
         exit 1
     fi
-    sudo -u postgres pg_dump > $dump_file
+    sudo -u postgres pg_dump $db_name > $dump_file
     exit 0
 fi
 
