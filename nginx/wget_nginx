@@ -1,0 +1,12 @@
+#!/bin/bash
+
+nginx=nginx-1.18.0.tar.gz
+pcre=pcre-8.44.tar.gz
+zlib=zlib-1.2.11.tar.gz
+openssl=openssl-1.1.1g.tar.gz
+
+wget https://nginx.org/download/$nginx && tar -xzf $nginx && rm $nginx
+wget https://ftp.pcre.org/pub/pcre/$pcre && tar -xzf $pcre && rm $pcre
+wget https://www.zlib.net/$zlib && tar -xzf $zlib && rm $zlib
+wget https://www.openssl.org/source/$openssl && tar -xzf $openssl && rm $openssl
+
