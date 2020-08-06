@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+import sys
+import random
+import string
+if len(sys.argv) < 3:
+    print("Usage: <filename> <size> <?dimension:[b][kb][mb][gb]>")
+    exit(0)
+file = open( sys.argv[1], "w")
+print("Generating file...")
+file_size = int(sys.argv[2])
+dimension = 1
+if len(sys.argv) == 4:
+    dim_str = sys.argv[3]
+    if dim_str == "kb":
+        dimension = 1024
+    elif dim_str == "mb":
+        dimension = 1024*1024
+    elif dim_str == "gb":
+        dimension = 1024*1024*1024
+
+for i in range(file_size):
+    progress = (i / file_size) * 100
+    print(f"Progress: {progress:.4}%        \r", end="")
+    file.write(''.join([random.choice(string.ascii_letters+string.digits+string.punctuation) for i in range(dimension)]))
+print("\nDone!")
+file.close()
